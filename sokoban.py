@@ -1,3 +1,5 @@
+from os import system, name 
+
 class Sokoban:
   map = [
     [3,3,3,3,3,3,3,3,3],
@@ -19,6 +21,12 @@ class Sokoban:
       print(fila)
     print ("============================")
     print ()
+
+  def clearsc (self):
+    if name == 'nt':
+      system('cls')
+    else:
+      system('clear')
 
   def teleport (self):
     if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx + 2] == 0:
@@ -104,14 +112,47 @@ class Sokoban:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 1
       self.posx -= 1
-    #Meta, Muñeco
+    #Muñeco, Meta
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 4:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 5
       self.posx -= 1
+    #Muñeco, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy][self.posx - 1] = 1
+      self.map[self.posy][self.posx - 2] = 2
+      self.posx -= 1
+    #Muñeco, Caja, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy][self.posx - 1] = 1
+      self.map[self.posy][self.posx - 2] = 6
+      self.posx -= 1
+    #Muñeco-meta, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy][self.posx - 1] = 1
+      self.posx -= 1
+    #Muñeco-meta, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy][self.posx - 1] = 5
+      self.posx -= 1
+    #Muñeco-meta, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy][self.posx - 1] = 1
+      self.map[self.posy][self.posx - 2] = 2
+      self.posx -= 1
+    #Muñeco-meta, Caja, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy][self.posx - 1] = 1
+      self.map[self.posy][self.posx - 2] = 6
+      self.posx -= 1
 
 juego = Sokoban()
-
 juego.imprimirMapa()
 
 while True: #Bucle para jugar N veces
@@ -120,11 +161,14 @@ while True: #Bucle para jugar N veces
   movimientos = input(":") #Lee el movimiento del muñeco
   if movimientos == "d": #Si es d - moverá a la derecha
     juego.moverDerecha()
+    juego.clearsc()
     juego.imprimirMapa()
   elif movimientos == "a": #Si es a nos moverá a la izquierda
     juego.moverIzquierda()
+    juego.clearsc()
     juego.imprimirMapa()
   elif movimientos == "t": #Se teletransporta a posibles "random"
     juego.teleport()
+    juego.clearsc()
     juego.imprimirMapa()
 
