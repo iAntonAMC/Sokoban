@@ -13,7 +13,7 @@ class Sokoban:
   posx = 4 #Posición muñeco en columnas
 
   def __init__ (self):
-    print ("Sokoban v0.2 by Jesús Antonio Torres \n\n")
+    print ("Sokoban v0.2.1 by Jesús Antonio Torres \na - izquierda \nd - derecha \nw - arriba \ns - abajo")
 
   def imprimirMapa (self):
     print ("============================")  
@@ -37,13 +37,48 @@ class Sokoban:
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 1] == 0:
       self.map[self.posy + 1][self.posx + 1] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy +=1
-      self.posx +=1
+      self.posy += 1
+      self.posx += 1
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 2] == 0:
       self.map[self.posy + 2][self.posx + 2] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy +=2
-      self.posx +=2
+      self.posy += 2
+      self.posx += 2
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx - 1] == 0:
+      self.map[self.posy + 1][self.posx - 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 1
+      self.posx -= 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx + 1] == 0:
+      self.map[self.posy - 1][self.posx + 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 1
+      self.posx += 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx - 1] == 0:
+      self.map[self.posy - 1][self.posx - 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 1
+      self.posx -= 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx - 3] == 0:
+      self.map[self.posy - 2][self.posx - 3] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 2
+      self.posx -= 3
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 3][self.posx + 1] == 0:
+      self.map[self.posy - 3][self.posx + 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 3
+      self.posx += 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx + 2] == 0:
+      self.map[self.posy - 2][self.posx + 2] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 2
+      self.posx += 2
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx - 2] == 0:
+      self.map[self.posy - 2][self.posx + 2] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy -= 2
+      self.posx -= 2
 
   def moverDerecha (self):
     #Muñeco, Espacio
@@ -156,9 +191,10 @@ juego = Sokoban()
 juego.imprimirMapa()
 
 while True: #Bucle para jugar N veces
-  instrucciones = "¿Hacía dónde quiere ir ahora?\nd-Derecha\na-Izquierda\nPuedes precionar 't' para RandomTeleport"
-  print(instrucciones)
-  movimientos = input(":") #Lee el movimiento del muñeco
+  x = juego.posx
+  y = juego.posy
+  print("Cur position: ", "[", x, ",", y, "]")
+  movimientos = input("Next move:") #Lee el movimiento del muñeco
   if movimientos == "d": #Si es d - moverá a la derecha
     juego.moverDerecha()
     juego.clearsc()
