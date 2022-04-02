@@ -13,7 +13,7 @@ class Sokoban:
   posx = 4 #Posición muñeco en columnas
 
   def __init__ (self):
-    print ("Sokoban v0.2.1 by Jesús Antonio Torres \na - izquierda \nd - derecha \nw - arriba \ns - abajo")
+    print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
   def imprimirMapa (self):
     print ("============================")  
@@ -29,56 +29,86 @@ class Sokoban:
       system('clear')
 
   def teleport (self):
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx + 2] == 0:
-      self.map[self.posy - 1][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy -=1
-      self.posx +=2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 1] == 0:
+    if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 1] == 0:
       self.map[self.posy + 1][self.posx + 1] = 1
       self.map[self.posy][self.posx] = 0
+      self.posy +=1
+      self.posx +=1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 2] == 0:
+      self.map[self.posy + 1][self.posx + 2] = 1
+      self.map[self.posy][self.posx] = 0
       self.posy += 1
+      self.posx += 2
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 3] == 0:
+      self.map[self.posy + 1][self.posx + 3] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 1
+      self.posx += 3
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 4] == 0:
+      self.map[self.posy + 1][self.posx + 4] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 1
+      self.posx += 4
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 1] == 0:
+      self.map[self.posy + 2][self.posx + 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 2
       self.posx += 1
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 2] == 0:
       self.map[self.posy + 2][self.posx + 2] = 1
       self.map[self.posy][self.posx] = 0
       self.posy += 2
       self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx - 1] == 0:
-      self.map[self.posy + 1][self.posx - 1] = 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 3] == 0:
+      self.map[self.posy + 2][self.posx + 3] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy += 1
-      self.posx -= 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx + 1] == 0:
-      self.map[self.posy - 1][self.posx + 1] = 1
+      self.posy += 2
+      self.posx += 3
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 4] == 0:
+      self.map[self.posy + 2][self.posx + 4] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy -= 1
+      self.posy += 2
+      self.posx += 4
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 1] == 0:
+      self.map[self.posy + 3][self.posx + 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 3
       self.posx += 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx - 1] == 0:
-      self.map[self.posy - 1][self.posx - 1] = 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 2] == 0:
+      self.map[self.posy + 3][self.posx + 2] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy -= 1
-      self.posx -= 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx - 3] == 0:
-      self.map[self.posy - 2][self.posx - 3] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy -= 2
-      self.posx -= 3
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 3][self.posx + 1] == 0:
-      self.map[self.posy - 3][self.posx + 1] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy -= 3
-      self.posx += 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx + 2] == 0:
-      self.map[self.posy - 2][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy -= 2
+      self.posy += 3
       self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 2][self.posx - 2] == 0:
-      self.map[self.posy - 2][self.posx + 2] = 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 3] == 0:
+      self.map[self.posy + 3][self.posx + 3] = 1
       self.map[self.posy][self.posx] = 0
-      self.posy -= 2
-      self.posx -= 2
+      self.posy += 3
+      self.posx += 3
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 4] == 0:
+      self.map[self.posy + 3][self.posx + 4] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 3
+      self.posx += 4
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 1] == 0:
+      self.map[self.posy + 4][self.posx + 1] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 4
+      self.posx += 1
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 2] == 0:
+      self.map[self.posy + 4][self.posx + 2] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 4
+      self.posx += 2
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 3] == 0:
+      self.map[self.posy + 4][self.posx + 3] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 4
+      self.posx += 3
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 4] == 0:
+      self.map[self.posy + 4][self.posx + 4] = 1
+      self.map[self.posy][self.posx] = 0
+      self.posy += 4
+      self.posx += 4
 
   def moverDerecha (self):
     #Muñeco, Espacio
@@ -228,10 +258,8 @@ juego = Sokoban()
 juego.imprimirMapa()
 
 while True: #Bucle para jugar N veces
-  x = juego.posx
-  y = juego.posy
-  print("Cur position: ", "[", x, ",", y, "]")
-  movimientos = input("Next move:") #Lee el movimiento del muñeco
+  print("Posición actual: ", "[", juego.posy, ",", juego.posx, "]")
+  movimientos = input("Siguiente movimiento: ") #Lee el movimiento del muñeco
   if movimientos == "d": #Si es d - moverá a la derecha
     juego.moverDerecha()
     juego.clearsc()
@@ -248,3 +276,10 @@ while True: #Bucle para jugar N veces
     juego.teleport()
     juego.clearsc()
     juego.imprimirMapa()
+  else:
+    juego.clearsc()
+    print("============================")
+    print ("Porfavor, verifique su entrada...")
+    juego.imprimirMapa()
+
+
