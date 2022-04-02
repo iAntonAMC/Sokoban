@@ -154,45 +154,75 @@ class Sokoban:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 1
       self.posx -= 1
-    #Muñeco, Meta
+    #Meta, Muñeco
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 4:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 5
       self.posx -= 1
-    #Muñeco, Caja, Espacio
+    #Espacio, Caja, Muñeco
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 1
       self.map[self.posy][self.posx - 2] = 2
       self.posx -= 1
-    #Muñeco, Caja, Meta
+    #Meta, Caja, Muñeco
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 1
       self.map[self.posy][self.posx - 2] = 6
       self.posx -= 1
-    #Muñeco-meta, Espacio
+    #Espacio, Muñeco-meta
     elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 0:
       self.map[self.posy][self.posx] = 4
       self.map[self.posy][self.posx - 1] = 1
       self.posx -= 1
-    #Muñeco-meta, Meta
+    #Meta, Muñeco-meta
     elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 4:
       self.map[self.posy][self.posx] = 4
       self.map[self.posy][self.posx - 1] = 5
       self.posx -= 1
-    #Muñeco-meta, Caja, Espacio
+    #Espacio, Caja, Muñeco-meta
     elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
       self.map[self.posy][self.posx] = 4
       self.map[self.posy][self.posx - 1] = 1
       self.map[self.posy][self.posx - 2] = 2
       self.posx -= 1
-    #Muñeco-meta, Caja, Meta
+    #Meta, Caja, Muñeco-meta
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx - 1] = 1
       self.map[self.posy][self.posx - 2] = 6
       self.posx -= 1
+    #Espacio, Caja-meta, Muñeco-meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posy - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy][self.posx - 1] = 5
+      self.map[self.posy][self.posx - 2] = 2
+      self.posx -= 1
+    #Meta, Caja-meta, Muñeco-meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy][self.posx - 1] = 5
+      self.map[self.posy][self.posx - 2] = 6
+      self.posx -=1
+    #Espacio, Caja-meta, Muñeco
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy][self.posx - 1] = 5
+      self.map[self.posy][self.posx - 2] = 2
+      self.posx -= 1
+    #Meta, Caja-meta, Muñeco
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy][self.posx - 1] = 5
+      self.map[self.posy][self.posx - 2] = 6
+      self.posx -= 1
+
+  def moverArriba(self):
+    if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 1
+      self.posy -= 1
 
 juego = Sokoban()
 juego.imprimirMapa()
@@ -210,8 +240,11 @@ while True: #Bucle para jugar N veces
     juego.moverIzquierda()
     juego.clearsc()
     juego.imprimirMapa()
+  elif movimientos == "w": #Si entramos w nos moverá arriba
+    juego.moverArriba()
+    juego.clearsc()
+    juego.imprimirMapa()
   elif movimientos == "t": #Se teletransporta a posibles "random"
     juego.teleport()
     juego.clearsc()
     juego.imprimirMapa()
-
