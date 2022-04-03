@@ -249,10 +249,28 @@ class Sokoban:
       self.posx -= 1
 
   def moverArriba(self):
+    #Muñeco, Espacio
     if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 0:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy - 1][self.posx] = 1
       self.posy -= 1
+    #Muñeco, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 5
+      self.posy -= 1
+    #Muñeco, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 1
+      self.map[self.posy - 2][self.posx] = 2
+      self.posy -= 1
+    #Muñeco, Caja, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 1
+      self.map[self.posy - 2][self.posx] = 6
+
 
 juego = Sokoban()
 juego.imprimirMapa()
