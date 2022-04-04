@@ -4,18 +4,18 @@ import random
 class Sokoban:
   map = [
     [3,3,3,3,3,3,3,3,3,3,3,3,3],
+    [3,1,0,0,0,0,0,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,0,1,0,2,4,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,2,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,4,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,3,3,3,3,3,3,3,3,3,3,3,3]
 ]
 
-  posy = 2 #Posición muñeco en filas
-  posx = 4 #Posición muñeco en columnas
+  posy = 1 #Posición muñeco en filas
+  posx = 1 #Posición muñeco en columnas
 
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
@@ -115,6 +115,8 @@ class Sokoban:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx + 1] = 5
       self.map[self.posy][self.posx + 2] = 6
+      self.posx += 1
+
   def moverIzquierda(self):
     #Espacio, Muñeco
     if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 0:
@@ -208,12 +210,121 @@ class Sokoban:
       self.map[self.posy - 1][self.posx] = 1
       self.map[self.posy - 2][self.posx] = 6
       self.posy -= 1
+    #Muñeco-meta, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 1
+      self.posy -= 1
+    #Muñeco-meta, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 5
+      self.posy -= 1
+    #Muñeco-meta, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 1
+      self.map[self.posy - 2][self.posx] = 2
+      self.posy -=1
+    #Muñeco-meta, Caja, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 1
+      self.map[self.posy - 2][self.posx] = 6
+      self.posy -= 1
+    #Muñeco-meta, Caja-meta, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 5
+      self.map[self.posy - 2][self.posx] = 2
+      self.posy -= 1
+    #Muñeco-meta, Caja-meta, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy - 1][self.posx] = 5
+      self.map[self.posy - 2][self.posx] = 6
+      self.posy -= 1
+    #Muñeco, Caja-meta, Espacio
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 5
+      self.map[self.posy - 2][self.posx] = 2
+      self.posy -= 1
+    #Muñeco, Caja-meta, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy - 1][self.posx] = 5
+      self.map[self.posy - 2][self.posx] = 6
+      self.posy -= 1
 
   def moverAbajo(self):
     #Muñeco, Espacio
     if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 0:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy + 1][self.posx] = 1
+      self.posy += 1
+    #Muñeco, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 5
+      self.posy += 1
+    #Muñeco, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 1
+      self.map[self.posy + 2][self.posx] = 2
+      self.posy += 1
+    #Muñeco, Caja, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 1
+      self.map[self.posy + 2][self.posx] = 6
+      self.posy += 1
+    #Muñeco-meta, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 1
+      self.posy += 1
+    #Muñeco-meta, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 5
+      self.posy += 1
+    #Muñeco-meta, Caja, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 1
+      self.map[self.posy + 2][self.posx] = 2
+      self.posy +=1
+    #Muñeco-meta, Caja, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 1
+      self.map[self.posy + 2][self.posx] = 6
+      self.posy += 1
+    #Muñeco-meta, Caja-meta, Espacio
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 5
+      self.map[self.posy + 2][self.posx] = 2
+      self.posy += 1
+    #Muñeco-meta, Caja-meta, Meta
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 4
+      self.map[self.posy + 1][self.posx] = 5
+      self.map[self.posy + 2][self.posx] = 6
+      self.posy += 1
+    #Muñeco, Caja-meta, Espacio
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 5
+      self.map[self.posy + 2][self.posx] = 2
+      self.posy += 1
+    #Muñeco, Caja-meta, Meta
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 5
+      self.map[self.posy + 2][self.posx] = 6
       self.posy += 1
 
 juego = Sokoban()
@@ -247,5 +358,4 @@ while True: #Bucle para jugar N veces
     print("============================")
     print ("Porfavor, verifique su entrada...")
     juego.imprimirMapa()
-
 
