@@ -23,7 +23,23 @@ class Sokoban:
   def imprimirMapa (self):
     print ("============================")  
     for fila in self.map:
-      print(fila)
+      for casilla in fila:
+        if casilla == 3:
+          print(chr(128679), end=" ")
+        elif casilla == 0:
+          print(" ", end=" ")
+        elif casilla == 1:
+          print(chr(128125), end=" ")
+        elif casilla == 2:
+          print(chr(127921), end= " ")
+        elif casilla == 4:
+          print(chr(128142), end=" ")
+        elif casilla == 5:
+          print(chr(128126), end=" ")
+        elif casilla == 6:
+          print(chr(129535), end=" ")
+        else:
+          print(casilla)
     print ("============================")
     print ()
 
