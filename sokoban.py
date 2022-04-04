@@ -16,8 +16,8 @@ class Sokoban:
 
   posy = 1 #Posición muñeco en filas
   posx = 1 #Posición muñeco en columnas
-  ty = random.randint(1, 6)
-  tx = random.randint(1, 6)  
+  ty = random.randint(1, 10)
+  tx = random.randint(1, 10)  
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
@@ -50,23 +50,23 @@ class Sokoban:
     else:
       system('clear')
 
+  def encontrarPersonaje(self):
+    pass
+
   def teleport (self):
-    while True:
-      if self.map[self.ty][self.tx] == 0:
-        self.map[self.ty][self.tx] = 1
-    ty = random
-    if self.map[self.posy][self.posx] == 1:
+    if self.map[self.ty][self.tx] == 0:
       self.map[self.posy][self.posx] = 0
-      self.posy = random.randint(1, 6)
-      self.posx = random.randint(1, 6)
-      if self.map[self.posy][self.posx] == 0:
-        self.map[self.posy][self.posx] = 1
-    elif self.map[self.posy][self.posx] == 5:
-      self.map[self.posy][self.posx] = 4
-      self.posy = random.randint(1, 6)
-      self.posx = random.randint(1, 6)
-      if self.map[self.posy][self.posx] == 0:
-        self.map[self.posy][self.posx] = 1
+      self.map[self.ty][self.tx] = 1
+      self.posy = self.ty
+      self.posx = self.tx
+    else:
+      self.ty = random.randint(1, 6)
+      self.tx = random.randint(1, 6)
+      if self.map[self.ty][self.tx] == 0:
+        self.map[self.posy][self.posx] = 0
+        self.map[self.ty][self.tx] = 1
+        self.posy = self.ty
+        self.posx = self.tx
 
   def moverDerecha (self):
     #Muñeco, Espacio
