@@ -16,7 +16,8 @@ class Sokoban:
 
   posy = 1 #Posición muñeco en filas
   posx = 1 #Posición muñeco en columnas
-
+  ty = random.randint(1, 6)
+  tx = random.randint(1, 6)  
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
@@ -25,23 +26,23 @@ class Sokoban:
     for fila in self.map:
       for casilla in fila:
         if casilla == 3:
-          print(chr(128679), end=" ")
+          print(chr(128679), end="")
         elif casilla == 0:
-          print(" ", end=" ")
+          print("  ", end="")
         elif casilla == 1:
-          print(chr(128125), end=" ")
+          print(chr(128125), end="")
         elif casilla == 2:
-          print(chr(127921), end= " ")
+          print(chr(127921), end= "")
         elif casilla == 4:
-          print(chr(128142), end=" ")
+          print(chr(128142), end="")
         elif casilla == 5:
-          print(chr(128126), end=" ")
+          print(chr(128126), end="")
         elif casilla == 6:
-          print(chr(129535), end=" ")
+          print(chr(129535), end="")
         else:
-          print(casilla)
+          print(casilla, end="")
+      print()
     print ("============================")
-    print ()
 
   def clearsc (self):
     if name == 'nt':
@@ -50,16 +51,20 @@ class Sokoban:
       system('clear')
 
   def teleport (self):
+    while True:
+      if self.map[self.ty][self.tx] == 0:
+        self.map[self.ty][self.tx] = 1
+    ty = random
     if self.map[self.posy][self.posx] == 1:
       self.map[self.posy][self.posx] = 0
-      self.posy = random.randint(0, 6)
-      self.posx = random.randint(0, 6)
+      self.posy = random.randint(1, 6)
+      self.posx = random.randint(1, 6)
       if self.map[self.posy][self.posx] == 0:
         self.map[self.posy][self.posx] = 1
     elif self.map[self.posy][self.posx] == 5:
       self.map[self.posy][self.posx] = 4
-      self.posy = random.randint(0, 6)
-      self.posx = random.randint(0, 6)
+      self.posy = random.randint(1, 6)
+      self.posx = random.randint(1, 6)
       if self.map[self.posy][self.posx] == 0:
         self.map[self.posy][self.posx] = 1
 
