@@ -1,12 +1,17 @@
 from os import system, name 
+import random
 
 class Sokoban:
   map = [
-    [3,3,3,3,3,3,3,3,3],
-    [3,0,0,0,0,0,0,0,3],
-    [3,0,0,0,1,0,2,4,3],
-    [3,0,0,0,0,0,0,0,3],
-    [3,3,3,3,3,3,3,3,3]
+    [3,3,3,3,3,3,3,3,3,3,3,3,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,1,0,2,4,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,0,0,0,0,0,0,3],
+    [3,3,3,3,3,3,3,3,3,3,3,3,3]
 ]
 
   posy = 2 #Posición muñeco en filas
@@ -29,86 +34,18 @@ class Sokoban:
       system('clear')
 
   def teleport (self):
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 1] == 0:
-      self.map[self.posy + 1][self.posx + 1] = 1
+    if self.map[self.posy][self.posx] == 1:
       self.map[self.posy][self.posx] = 0
-      self.posy +=1
-      self.posx +=1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 2] == 0:
-      self.map[self.posy + 1][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 1
-      self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 3] == 0:
-      self.map[self.posy + 1][self.posx + 3] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 1
-      self.posx += 3
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx + 4] == 0:
-      self.map[self.posy + 1][self.posx + 4] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 1
-      self.posx += 4
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 1] == 0:
-      self.map[self.posy + 2][self.posx + 1] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 2
-      self.posx += 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 2] == 0:
-      self.map[self.posy + 2][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 2
-      self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 3] == 0:
-      self.map[self.posy + 2][self.posx + 3] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 2
-      self.posx += 3
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 2][self.posx + 4] == 0:
-      self.map[self.posy + 2][self.posx + 4] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 2
-      self.posx += 4
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 1] == 0:
-      self.map[self.posy + 3][self.posx + 1] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 3
-      self.posx += 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 2] == 0:
-      self.map[self.posy + 3][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 3
-      self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 3] == 0:
-      self.map[self.posy + 3][self.posx + 3] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 3
-      self.posx += 3
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 3][self.posx + 4] == 0:
-      self.map[self.posy + 3][self.posx + 4] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 3
-      self.posx += 4
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 1] == 0:
-      self.map[self.posy + 4][self.posx + 1] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 4
-      self.posx += 1
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 2] == 0:
-      self.map[self.posy + 4][self.posx + 2] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 4
-      self.posx += 2
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 3] == 0:
-      self.map[self.posy + 4][self.posx + 3] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 4
-      self.posx += 3
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 4][self.posx + 4] == 0:
-      self.map[self.posy + 4][self.posx + 4] = 1
-      self.map[self.posy][self.posx] = 0
-      self.posy += 4
-      self.posx += 4
+      self.posy = random.randint(0, 6)
+      self.posx = random.randint(0, 6)
+      if self.map[self.posy][self.posx] == 0:
+        self.map[self.posy][self.posx] = 1
+    elif self.map[self.posy][self.posx] == 5:
+      self.map[self.posy][self.posx] = 4
+      self.posy = random.randint(0, 6)
+      self.posx = random.randint(0, 6)
+      if self.map[self.posy][self.posx] == 0:
+        self.map[self.posy][self.posx] = 1
 
   def moverDerecha (self):
     #Muñeco, Espacio
@@ -122,7 +59,7 @@ class Sokoban:
       self.map[self.posy][self.posx + 1] = 5
       self.posx += 1
     #Muñeco, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy + 2] == 0:
+    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx + 1] = 1
       self.map[self.posy][self.posx + 2] = 2
@@ -144,7 +81,7 @@ class Sokoban:
       self.map[self.posy][self.posx + 1] = 5
       self.posx += 1
     #Muñeco-meta,  Caja, Espacio
-    elif self.map[self.posy][self.posx] ==  5 and self.map[self.posy][self.posx + 1] == 2 and self.mapa[self.posy][self.posx + 2] == 0:
+    elif self.map[self.posy][self.posx] ==  5 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
       self.map[self.posy][self.posx] = 4
       self.map[self.posy][self.posx + 1] = 1
       self.map[self.posy][self.posx + 2] = 2
@@ -172,12 +109,12 @@ class Sokoban:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx + 1] = 5
       self.map[self.posy][self.posx + 2] = 2
+      self.posx += 1
     #Muñeco, Caja-meta, Meta
     elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 4:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy][self.posx + 1] = 5
       self.map[self.posy][self.posx + 2] = 6
-
   def moverIzquierda(self):
     #Espacio, Muñeco
     if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 0:
@@ -270,27 +207,38 @@ class Sokoban:
       self.map[self.posy][self.posx] = 0
       self.map[self.posy - 1][self.posx] = 1
       self.map[self.posy - 2][self.posx] = 6
+      self.posy -= 1
 
+  def moverAbajo(self):
+    #Muñeco, Espacio
+    if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 0:
+      self.map[self.posy][self.posx] = 0
+      self.map[self.posy + 1][self.posx] = 1
+      self.posy += 1
 
 juego = Sokoban()
 juego.imprimirMapa()
 
 while True: #Bucle para jugar N veces
   print("Posición actual: ", "[", juego.posy, ",", juego.posx, "]")
-  movimientos = input("Siguiente movimiento: ") #Lee el movimiento del muñeco
-  if movimientos == "d": #Si es d - moverá a la derecha
+  movimiento = input("Siguiente movimiento: ") #Lee el movimiento del muñeco
+  if movimiento == "d": #Si es d - moverá a la derecha
     juego.moverDerecha()
     juego.clearsc()
     juego.imprimirMapa()
-  elif movimientos == "a": #Si es a nos moverá a la izquierda
+  elif movimiento == "a": #Si es a nos moverá a la izquierda
     juego.moverIzquierda()
     juego.clearsc()
     juego.imprimirMapa()
-  elif movimientos == "w": #Si entramos w nos moverá arriba
+  elif movimiento == "w": #Si entramos w nos moverá arriba
     juego.moverArriba()
     juego.clearsc()
     juego.imprimirMapa()
-  elif movimientos == "t": #Se teletransporta a posibles "random"
+  elif movimiento == "s": #Si pulsamo s nos moverá abajo
+    juego.moverAbajo()
+    juego.clearsc()
+    juego.imprimirMapa()
+  elif movimiento == "t": #Se teletransporta a posibles "random"
     juego.teleport()
     juego.clearsc()
     juego.imprimirMapa()
