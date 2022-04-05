@@ -5,10 +5,10 @@ class Sokoban:
   map = [
     [3,3,3,3,3,3,3,3,3,3,3,3,3],
     [3,1,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,2,0,0,0,0,0,0,0,0,3],
+    [3,0,0,0,0,0,3,0,0,0,0,0,3],
+    [3,0,0,2,0,0,3,0,0,0,0,0,3],
+    [3,0,0,2,0,0,4,0,0,0,0,0,3],
     [3,0,0,0,0,0,4,0,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,0,0,0,0,0,0,0,0,0,0,0,3],
     [3,3,3,3,3,3,3,3,3,3,3,3,3]
@@ -16,8 +16,7 @@ class Sokoban:
 
   posy = 1 #Posición muñeco en filas
   posx = 1 #Posición muñeco en columnas
-  ty = random.randint(1, 10)
-  tx = random.randint(1, 10)  
+ 
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
@@ -36,7 +35,7 @@ class Sokoban:
         elif casilla == 4:
           print(chr(128142), end="")
         elif casilla == 5:
-          print(chr(128126), end="")
+          print(chr(128125), end="")
         elif casilla == 6:
           print(chr(129535), end="")
         else:
@@ -54,8 +53,7 @@ class Sokoban:
     pass
 
   def teleport (self):
-    if self.map[self.ty][self.tx] == 0:
-      self.map[self.posy][self.posx] = 0
+    if self.map:
       self.map[self.ty][self.tx] = 1
       self.posy = self.ty
       self.posx = self.tx
@@ -65,8 +63,6 @@ class Sokoban:
       if self.map[self.ty][self.tx] == 0:
         self.map[self.posy][self.posx] = 0
         self.map[self.ty][self.tx] = 1
-        self.posy = self.ty
-        self.posx = self.tx
 
   def moverDerecha (self):
     #Muñeco, Espacio
@@ -379,4 +375,3 @@ while True: #Bucle para jugar N veces
     print("============================")
     print ("Porfavor, verifique su entrada...")
     juego.imprimirMapa()
-
