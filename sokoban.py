@@ -9,8 +9,8 @@ class Sokoban:
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
-  def imprimirMapa (self):
-    nivel = open("lv0.soko", "r")
+  def crearMapa (self):
+    nivel = open("lv1.soko", "r")
     for row in nivel:
       linea = []
       for digito in row:
@@ -18,6 +18,8 @@ class Sokoban:
           continue
         linea.append(int(digito))
       self.map.append(linea)
+
+  def imprimirMapa (self):
     print ("============================")  
     for fila in self.map:
       for casilla in fila:
@@ -342,6 +344,7 @@ class Sokoban:
       self.posy += 1
 
 juego = Sokoban()
+juego.crearMapa()
 juego.imprimirMapa()
 
 while True: #Bucle para jugar N veces
