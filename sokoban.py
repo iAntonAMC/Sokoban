@@ -2,18 +2,7 @@ from os import system, name
 import random
 
 class Sokoban:
-  map = [
-    [3,3,3,3,3,3,3,3,3,3,3,3,3],
-    [3,1,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,0,0,0,3,0,0,0,0,0,3],
-    [3,0,0,2,0,0,3,0,0,0,0,0,3],
-    [3,0,0,2,0,0,4,0,0,0,0,0,3],
-    [3,0,0,0,0,0,4,0,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
-    [3,0,0,0,0,0,0,0,0,0,0,0,3],
-    [3,3,3,3,3,3,3,3,3,3,3,3,3]
-]
-
+  map = []
   posy = 1 #Posición muñeco en filas
   posx = 1 #Posición muñeco en columnas
  
@@ -21,6 +10,14 @@ class Sokoban:
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
   def imprimirMapa (self):
+    nivel = open("lv0.soko", "r")
+    for row in nivel:
+      linea = []
+      for digito in row:
+        if digito == "\n":
+          continue
+        linea.append(int(digito))
+      self.map.append(linea)
     print ("============================")  
     for fila in self.map:
       for casilla in fila:
