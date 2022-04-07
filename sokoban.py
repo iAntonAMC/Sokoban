@@ -10,7 +10,7 @@ class Sokoban:
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
   def crearMapa (self):
-    nivel = open("lv1.soko", "r")
+    nivel = open("lv0.soko", "r")
     for row in nivel:
       linea = []
       for digito in row:
@@ -52,16 +52,7 @@ class Sokoban:
     pass
 
   def teleport (self):
-    if self.map:
-      self.map[self.ty][self.tx] = 1
-      self.posy = self.ty
-      self.posx = self.tx
-    else:
-      self.ty = random.randint(1, 6)
-      self.tx = random.randint(1, 6)
-      if self.map[self.ty][self.tx] == 0:
-        self.map[self.posy][self.posx] = 0
-        self.map[self.ty][self.tx] = 1
+    pass
 
   def moverDerecha (self):
     #Muñeco, Espacio
@@ -179,7 +170,7 @@ class Sokoban:
       self.map[self.posy][self.posx - 2] = 6
       self.posx -= 1
     #Espacio, Caja-meta, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posy - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
       self.map[self.posy][self.posx] = 4
       self.map[self.posy][self.posx - 1] = 5
       self.map[self.posy][self.posx - 2] = 2
