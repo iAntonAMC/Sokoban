@@ -3,14 +3,14 @@ import random
 
 class Sokoban:
   map = []
-  posy = 1 #Posición muñeco en filas
-  posx = 1 #Posición muñeco en columnas
+  posy = 0 #Posición muñeco en filas
+  posx = 0 #Posición muñeco en columnas
  
   def __init__ (self):
     print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
   def crearMapa (self):
-    nivel = open("lv0.soko", "r")
+    nivel = open("lv1.soko", "r")
     for row in nivel:
       linea = []
       for digito in row:
@@ -49,7 +49,12 @@ class Sokoban:
       system('clear')
 
   def encontrarPersonaje(self):
-    pass
+    for linea in self.map:
+      if 1 in linea:
+        self.posy = self.map.index(linea)
+        self.posx = linea.index(1)
+    print(self.posy)
+    print(self.posx)
 
   def teleport (self):
     pass
@@ -337,6 +342,7 @@ class Sokoban:
 juego = Sokoban()
 juego.crearMapa()
 juego.imprimirMapa()
+juego.encontrarPersonaje()
 
 while True: #Bucle para jugar N veces
   print("Posición actual: ", "[", juego.posy, ",", juego.posx, "]")
