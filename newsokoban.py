@@ -8,7 +8,7 @@ class Sokoban:
     nivel = open("lv0.soko", "r")
 
     def __init__(self):
-        print("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
+        print("Sokoban v1.0.0 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
 
     def crearMapa(self):
         for row in self.nivel:
@@ -122,3 +122,73 @@ class Sokoban:
             self.map[self.posy][self.posx + 1] = 5
             self.map[self.posy][self.posx + 2] = 6
             self.posx += 1
+
+    def movIzquierda(self):
+        #Espacio, Muñeco
+        if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.posx -= 1
+        #Meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.posx -= 1
+        #Espacio, Caja, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
+        #Espacio, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 1
+            self.posx -= 1
+        #Meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.posx -= 1
+        #Espacio, Caja, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
+        #Espacio, Caja-meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja-meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -=1
+        #Espacio, Caja-meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja-meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
