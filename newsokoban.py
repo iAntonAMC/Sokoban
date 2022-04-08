@@ -52,4 +52,3 @@ class Sokoban:
             elif 5 in linea:
                 self.posy = self.map.index(linea)
                 self.posx = linea.index(5)
-
