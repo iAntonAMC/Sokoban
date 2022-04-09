@@ -53,6 +53,9 @@ class Sokoban:
                 self.posy = self.map.index(linea)
                 self.posx = linea.index(5)
 
+    def evaluarMapa(self):
+        pass
+
     def movDerecha(self):
         #Muñeco, Espacio
         if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 0:
