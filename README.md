@@ -1,20 +1,22 @@
 # Sokoban
 Proyecto Sokoban para la materia de POO TI22
 
+Por: Torres Fernández Jesús Antonio | 1721110125
+
 # Identificadores
 0 - Espacio vacío 
 
-1 - Sokoban
+1 - Sokoban - (Alien)
 
-2 - Caja
+2 - Caja - (Bola 8)
 
-3 - Pared 
+3 - Pared - (Valla)
 
-4 - Meta 
+4 - Meta - (Diamante)
 
 5 - Sokoban en meta 
 
-6 - Caja en meta
+6 - Caja en meta - (Gema azúl)
 
 # Controles
 a - Izquierda
@@ -26,6 +28,8 @@ w - Arriba
 s - Abajo
 
 t - Teletransportarse
+
+enter - Lectura del movimiento que se ingrese
 
 # Instrucciones
 - El objetivo del juego, es conseguir acomodar todas las cajas (Bolas 8) en todas las metas (Diamantes).
