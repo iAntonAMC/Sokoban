@@ -65,7 +65,7 @@ class Sokoban:
             verificador.append(num5)
         if sum(verificador) == 0:
             self.limpiarPantalla()
-            print(chr(128125), '¡FELICIDADES! ¡COMPLETASTE EL NIVEL!', chr(128125))
+            print(chr(128125), chr(128142), ' ¡FELICIDADES! ¡COMPLETASTE EL NIVEL! ', chr(128142), chr(128125))
             self.completo = True
         else:
             pass
@@ -351,13 +351,13 @@ class Sokoban:
             self.posy += 1
 
     def comenzarJuego(self):
-        print(chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
-        print('||| Bienvenido a Sokoban v1.0.0 |||')
-        print(chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
-        print('\nActualmente el juego cuenta con 3 niveles\n')
+        print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
+        print(chr(128142), ' Bienvenido a Sokoban v1.0.0 ', chr(128142))
+        print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
+        print('\nActualmente el juego cuenta con 3 niveles')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir? \n\t[1 | 2 | 3]\n: ')
+            nuevo = input('¿Qué nivel desea abrir? \n\t[ 1 | 2 | 3 ]\n: ')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -413,7 +413,7 @@ class Sokoban:
         print('Actualmente el juego cuenta con 3 niveles')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir ahora?\n\t[1 | 2 | 3]\n: ')
+            nuevo = input('¿Qué nivel desea abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -465,4 +465,5 @@ while continua == 's':
     juego.completo = False
     juego.juegoContinuo()
 
-print('Gracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en el link de Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC')
+print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC')
+
