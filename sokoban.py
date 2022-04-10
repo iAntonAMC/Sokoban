@@ -59,10 +59,8 @@ class Sokoban:
     def evaluarMapa(self):
         verificador = []
         for linea in self.map:
-            num4 = linea.count(4)
-            num5 = linea.count(5)
-            verificador.append(num4)
-            verificador.append(num5)
+            num2 = linea.count(2)
+            verificador.append(num2)
         if sum(verificador) == 0:
             self.limpiarPantalla()
             print(chr(128125), chr(128142), ' ¡FELICIDADES! ¡COMPLETASTE EL NIVEL! ', chr(128142), chr(128125))
