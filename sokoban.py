@@ -63,7 +63,7 @@ class Sokoban:
             verificador.append(num2)
         if sum(verificador) == 0:
             self.limpiarPantalla()
-            print(chr(128125), chr(128142), ' ¡FELICIDADES! ¡COMPLETASTE EL NIVEL! ', chr(128142), chr(128125))
+            print(chr(128125), chr(128142), chr(129535), '¡FELICIDADES! ¡COMPLETASTE EL NIVEL!',chr(129535), chr(128142), chr(128125))
             self.completo = True
         else:
             pass
@@ -407,8 +407,7 @@ class Sokoban:
 
     def juegoContinuo(self):
         self.map = []
-        print('\n=========================================\n')
-        print('Actualmente el juego cuenta con 3 niveles')
+        print('=========================================')
         comienza = False
         while comienza == False:
             nuevo = input('¿Qué nivel desea abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
@@ -462,6 +461,7 @@ continua = input('¿Deseas continuar? \n\t[s/n]\n:')
 while continua == 's':
     juego.completo = False
     juego.juegoContinuo()
+    continua = input('¿Deseas continuar? \n\t[s/n]\n:')
 
-print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC')
+print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC©')
 

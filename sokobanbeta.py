@@ -423,7 +423,7 @@ class Sokoban:
                 comienza = True
             else:
                 self.limpiarPantalla()
-                print('Actualmente el juego no dispone del nivel seleccionado...\n')
+                print('¡¡¡ERROR: Actualmente el juego no dispone del nivel seleccionado...!!!\n')
         self.limpiarPantalla()
         self.crearMapa()
         self.encontrarSoko()
@@ -459,9 +459,12 @@ class Sokoban:
 juego = Sokoban()
 juego.comenzarJuego()
 continua = input('¿Deseas continuar? \n\t[s/n]\n:')
-while continua == 's':
-    juego.completo = False
-    juego.juegoContinuo()
-
+while True:
+    if continua == 's':
+        juego.completo = False
+        juego.juegoContinuo()
+    elif continua == 'n':
+        break
+    else:
+        print('Creo que esa no era un opción... Hehe´')
 print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC')
-
