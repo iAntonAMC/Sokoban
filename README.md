@@ -29,6 +29,6 @@ t - Teletransportarse
 
 # Instrucciones
 - El objetivo del juego, es conseguir acomodar todas las cajas (Bolas 8) en todas las metas (Diamantes).
-- Debes de declarar el movimiento y presionar enter para leer cada uno.
+- Debes de declarar el movimiento y presionar enter para leer cada entrada.
 - Sólo te puedes mover una casilla por entrada.
 - Diviérte mucho! :D
