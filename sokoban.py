@@ -1,374 +1,464 @@
-from os import system, name 
+from os import system, name
 import random
 
 class Sokoban:
-  map = []
-  posy = 0 #Posición muñeco en filas
-  posx = 0 #Posición muñeco en columnas
- 
-  def __init__ (self):
-    print ("Sokoban v0.2.1 Por Jesús Antonio Torres \na - Izquierda \nd - Derecha \nw - Arriba \ns - Abajo")
+    map = []
+    posy = 0
+    posx = 0
+    nivel = ()
+    completo = False
 
-  def crearMapa (self):
-    nivel = open("lv1.soko", "r")
-    for row in nivel:
-      linea = []
-      for digito in row:
-        if digito == "\n":
-          continue
-        linea.append(int(digito))
-      self.map.append(linea)
+    def __init__(self):
+        print("Sokoban v1.0.0 Por Jesús Antonio Torres \n")
 
-  def imprimirMapa (self):
-    print ("============================")  
-    for fila in self.map:
-      for casilla in fila:
-        if casilla == 3:
-          print(chr(128679), end="")
-        elif casilla == 0:
-          print("  ", end="")
-        elif casilla == 1:
-          print(chr(128125), end="")
-        elif casilla == 2:
-          print(chr(127921), end= "")
-        elif casilla == 4:
-          print(chr(128142), end="")
-        elif casilla == 5:
-          print(chr(128125), end="")
-        elif casilla == 6:
-          print(chr(129535), end="")
+    def crearMapa(self):
+        for row in self.nivel:
+            linea = []
+            for digito in row:
+                if digito == "\n":
+                    continue
+                linea.append(int(digito))
+            self.map.append(linea)
+
+    def imprimirMapa(self):
+        for fila in self.map:
+            for casilla in fila:
+                if casilla == 0:
+                    print("  ", end="")
+                elif casilla == 1:
+                    print(chr(128125), end="")
+                elif casilla == 2:
+                    print(chr(127921), end= "")
+                elif casilla == 3:
+                    print(chr(128679), end="")
+                elif casilla == 4:
+                    print(chr(128142), end="")
+                elif casilla == 5:
+                    print(chr(128125), end="")
+                elif casilla == 6:
+                    print(chr(129535), end="")
+                else:
+                    print(casilla, end="")
+            print()
+
+    def limpiarPantalla(self):
+        if name == "nt":
+            system("cls")
         else:
-          print(casilla, end="")
-      print()
-    print ("============================")
+            system("clear")
 
-  def clearsc (self):
-    if name == 'nt':
-      system('cls')
-    else:
-      system('clear')
+    def encontrarSoko(self):
+        for linea in self.map:
+            if 1 in linea:
+                self.posy = self.map.index(linea)
+                self.posx = linea.index(1)
+            elif 5 in linea:
+                self.posy = self.map.index(linea)
+                self.posx = linea.index(5)
 
-  def encontrarPersonaje(self):
-    for linea in self.map:
-      if 1 in linea:
-        self.posy = self.map.index(linea)
-        self.posx = linea.index(1)
-    print(self.posy)
-    print(self.posx)
+    def evaluarMapa(self):
+        verificador = []
+        for linea in self.map:
+            num4 = linea.count(4)
+            num5 = linea.count(5)
+            verificador.append(num4)
+            verificador.append(num5)
+        if sum(verificador) == 0:
+            self.limpiarPantalla()
+            print(chr(128125), '¡FELICIDADES! ¡COMPLETASTE EL NIVEL', chr(128125))
+            self.completo = True
+        else:
+            pass
 
-  def teleport (self):
-    pass
+    def movDerecha(self):
+        #Muñeco, Espacio
+        if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 1
+            self.posx += 1
+        #Muñeco, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 5
+            self.posx += 1
+        #Muñeco, Caja, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 1
+            self.map[self.posy][self.posx + 2] = 2
+            self.posx += 1
+        #Muñeco, Caja, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 1
+            self.map[self.posy][self.posx + 2] = 6
+            self.posx += 1
+        #Muñeco-meta,  Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 1
+            self.posx += 1
+        #Muñeco-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 5
+            self.posx += 1
+        #Muñeco-meta,  Caja, Espacio
+        elif self.map[self.posy][self.posx] ==  5 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 1
+            self.map[self.posy][self.posx + 2] = 2
+            self.posx += 1
+        #Muñeco-meta, Caja, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 1
+            self.map[self.posy][self.posx + 2] = 6
+            self.posx += 1
+        #Muñeco-meta, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 5
+            self.map[self.posy][self.posx + 2] = 2
+            self.posx += 1
+        #Muñeco-meta, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx + 1] = 5
+            self.map[self.posy][self.posx + 2] = 6
+            self.posx += 1
+        #Muñeco, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 5
+            self.map[self.posy][self.posx + 2] = 2
+            self.posx += 1
+        #Muñeco, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx + 1] = 5
+            self.map[self.posy][self.posx + 2] = 6
+            self.posx += 1
 
-  def moverDerecha (self):
-    #Muñeco, Espacio
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 1
-      self.posx += 1
-    #Muñeco, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 5
-      self.posx += 1
-    #Muñeco, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 1
-      self.map[self.posy][self.posx + 2] = 2
-      self.posx += 1
-    #Muñeco, Caja, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 1
-      self.map[self.posy][self.posx + 2] = 6
-      self.posx += 1
-    #Muñeco-meta,  Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 1
-      self.posx += 1
-    #Muñeco-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 5
-      self.posx += 1
-    #Muñeco-meta,  Caja, Espacio
-    elif self.map[self.posy][self.posx] ==  5 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 1
-      self.map[self.posy][self.posx + 2] = 2
-      self.posx += 1
-    #Muñeco-meta, Caja, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 2 and self.map[self.posy][self.posx + 2] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 1
-      self.map[self.posy][self.posx + 2] = 6
-      self.posx += 1
-    #Muñeco-meta, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 5
-      self.map[self.posy][self.posx + 2] = 2
-      self.posx += 1
-    #Muñeco-meta, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx + 1] = 5
-      self.map[self.posy][self.posx + 2] = 6
-      self.posx += 1
-    #Muñeco, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 5
-      self.map[self.posy][self.posx + 2] = 2
-      self.posx += 1
-    #Muñeco, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx + 1] == 6 and self.map[self.posy][self.posx + 2] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx + 1] = 5
-      self.map[self.posy][self.posx + 2] = 6
-      self.posx += 1
+    def movIzquierda(self):
+        #Espacio, Muñeco
+        if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.posx -= 1
+        #Meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.posx -= 1
+        #Espacio, Caja, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
+        #Espacio, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 1
+            self.posx -= 1
+        #Meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.posx -= 1
+        #Espacio, Caja, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 1
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
+        #Espacio, Caja-meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja-meta, Muñeco-meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -=1
+        #Espacio, Caja-meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 2
+            self.posx -= 1
+        #Meta, Caja-meta, Muñeco
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy][self.posx - 1] = 5
+            self.map[self.posy][self.posx - 2] = 6
+            self.posx -= 1
 
-  def moverIzquierda(self):
-    #Espacio, Muñeco
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 1
-      self.posx -= 1
-    #Meta, Muñeco
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 5
-      self.posx -= 1
-    #Espacio, Caja, Muñeco
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 1
-      self.map[self.posy][self.posx - 2] = 2
-      self.posx -= 1
-    #Meta, Caja, Muñeco
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 1
-      self.map[self.posy][self.posx - 2] = 6
-      self.posx -= 1
-    #Espacio, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx - 1] = 1
-      self.posx -= 1
-    #Meta, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx - 1] = 5
-      self.posx -= 1
-    #Espacio, Caja, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx - 1] = 1
-      self.map[self.posy][self.posx - 2] = 2
-      self.posx -= 1
-    #Meta, Caja, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 2 and self.map[self.posy][self.posx - 2] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 1
-      self.map[self.posy][self.posx - 2] = 6
-      self.posx -= 1
-    #Espacio, Caja-meta, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx - 1] = 5
-      self.map[self.posy][self.posx - 2] = 2
-      self.posx -= 1
-    #Meta, Caja-meta, Muñeco-meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy][self.posx - 1] = 5
-      self.map[self.posy][self.posx - 2] = 6
-      self.posx -=1
-    #Espacio, Caja-meta, Muñeco
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 5
-      self.map[self.posy][self.posx - 2] = 2
-      self.posx -= 1
-    #Meta, Caja-meta, Muñeco
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy][self.posx - 1] == 6 and self.map[self.posy][self.posx - 2] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy][self.posx - 1] = 5
-      self.map[self.posy][self.posx - 2] = 6
-      self.posx -= 1
+    def movArriba(self):
+        #Muñeco, Espacio
+        if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 1
+            self.posy -= 1
+        #Muñeco, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 5
+            self.posy -= 1
+        #Muñeco, Caja, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 1
+            self.map[self.posy - 2][self.posx] = 2
+            self.posy -= 1
+        #Muñeco, Caja, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 1
+            self.map[self.posy - 2][self.posx] = 6
+            self.posy -= 1
+        #Muñeco-meta, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 1
+            self.posy -= 1
+        #Muñeco-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 5
+            self.posy -= 1
+        #Muñeco-meta, Caja, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 1
+            self.map[self.posy - 2][self.posx] = 2
+            self.posy -= 1 
+        #Muñeco-meta, Caja, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 1
+            self.map[self.posy - 2][self.posx] = 6
+            self.posy -= 1
+        #Muñeco-meta, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 5
+            self.map[self.posy - 2][self.posx] = 2
+            self.posy -= 1
+        #Muñeco-meta, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy - 1][self.posx] = 5
+            self.map[self.posy - 2][self.posx] = 6
+            self.posy -= 1
+        #Muñeco, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 5
+            self.map[self.posy - 2][self.posx] = 2
+            self.posy -= 1
+        #Muñeco, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy - 1][self.posx] = 5
+            self.map[self.posy - 2][self.posx] = 6
+            self.posy -= 1
 
-  def moverArriba(self):
-    #Muñeco, Espacio
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 1
-      self.posy -= 1
-    #Muñeco, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 5
-      self.posy -= 1
-    #Muñeco, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 1
-      self.map[self.posy - 2][self.posx] = 2
-      self.posy -= 1
-    #Muñeco, Caja, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 1
-      self.map[self.posy - 2][self.posx] = 6
-      self.posy -= 1
-    #Muñeco-meta, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 1
-      self.posy -= 1
-    #Muñeco-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 5
-      self.posy -= 1
-    #Muñeco-meta, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 1
-      self.map[self.posy - 2][self.posx] = 2
-      self.posy -=1
-    #Muñeco-meta, Caja, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 2 and self.map[self.posy - 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 1
-      self.map[self.posy - 2][self.posx] = 6
-      self.posy -= 1
-    #Muñeco-meta, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 5
-      self.map[self.posy - 2][self.posx] = 2
-      self.posy -= 1
-    #Muñeco-meta, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy - 1][self.posx] = 5
-      self.map[self.posy - 2][self.posx] = 6
-      self.posy -= 1
-    #Muñeco, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 5
-      self.map[self.posy - 2][self.posx] = 2
-      self.posy -= 1
-    #Muñeco, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy - 1][self.posx] == 6 and self.map[self.posy - 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy - 1][self.posx] = 5
-      self.map[self.posy - 2][self.posx] = 6
-      self.posy -= 1
+    def movAbajo(self):
+        #Muñeco, Espacio
+        if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 1
+            self.posy += 1
+        #Muñeco, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 5
+            self.posy += 1
+        #Muñeco, Caja, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 1
+            self.map[self.posy + 2][self.posx] = 2
+            self.posy += 1
+        #Muñeco, Caja, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 1
+            self.map[self.posy + 2][self.posx] = 6
+            self.posy += 1
+        #Muñeco-meta, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 1
+            self.posy += 1
+        #Muñeco-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 5
+            self.posy += 1
+        #Muñeco-meta, Caja, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 1
+            self.map[self.posy + 2][self.posx] = 2
+            self.posy +=1
+        #Muñeco-meta, Caja, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 1
+            self.map[self.posy + 2][self.posx] = 6
+            self.posy += 1
+        #Muñeco-meta, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 5
+            self.map[self.posy + 2][self.posx] = 2
+            self.posy += 1
+        #Muñeco-meta, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 4
+            self.map[self.posy + 1][self.posx] = 5
+            self.map[self.posy + 2][self.posx] = 6
+            self.posy += 1
+        #Muñeco, Caja-meta, Espacio
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 5
+            self.map[self.posy + 2][self.posx] = 2
+            self.posy += 1
+        #Muñeco, Caja-meta, Meta
+        elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
+            self.map[self.posy][self.posx] = 0
+            self.map[self.posy + 1][self.posx] = 5
+            self.map[self.posy + 2][self.posx] = 6
+            self.posy += 1
 
-  def moverAbajo(self):
-    #Muñeco, Espacio
-    if self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 1
-      self.posy += 1
-    #Muñeco, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 5
-      self.posy += 1
-    #Muñeco, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 1
-      self.map[self.posy + 2][self.posx] = 2
-      self.posy += 1
-    #Muñeco, Caja, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 1
-      self.map[self.posy + 2][self.posx] = 6
-      self.posy += 1
-    #Muñeco-meta, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 1
-      self.posy += 1
-    #Muñeco-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 5
-      self.posy += 1
-    #Muñeco-meta, Caja, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 1
-      self.map[self.posy + 2][self.posx] = 2
-      self.posy +=1
-    #Muñeco-meta, Caja, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 2 and self.map[self.posy + 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 1
-      self.map[self.posy + 2][self.posx] = 6
-      self.posy += 1
-    #Muñeco-meta, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 5
-      self.map[self.posy + 2][self.posx] = 2
-      self.posy += 1
-    #Muñeco-meta, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 5 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 4
-      self.map[self.posy + 1][self.posx] = 5
-      self.map[self.posy + 2][self.posx] = 6
-      self.posy += 1
-    #Muñeco, Caja-meta, Espacio
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 0:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 5
-      self.map[self.posy + 2][self.posx] = 2
-      self.posy += 1
-    #Muñeco, Caja-meta, Meta
-    elif self.map[self.posy][self.posx] == 1 and self.map[self.posy + 1][self.posx] == 6 and self.map[self.posy + 2][self.posx] == 4:
-      self.map[self.posy][self.posx] = 0
-      self.map[self.posy + 1][self.posx] = 5
-      self.map[self.posy + 2][self.posx] = 6
-      self.posy += 1
+    def comenzarJuego(self):
+        print('|| Bienvenido a Sokoban v1.0.0 ||')
+        print('Actualmente el juego cuenta con 3 niveles\n')
+        comienza = False
+        while comienza == False:
+            nuevo = input('¿Qué nivel desea abrir? \n\t[1 | 2 | 3]\n: ')
+            if nuevo == '1':
+                self.nivel = open("lv0.soko", "r")
+                comienza = True
+            elif nuevo == '2':
+                self.nivel = open("lv1.soko", "r")
+                comienza = True
+            elif nuevo == '3':
+                self.nivel = open("lv2.soko", "r")
+                comienza = True
+            else:
+                self.limpiarPantalla()
+                print('Actualmente el juego no dispone del nivel seleccionado...\n')
+
+        self.limpiarPantalla()
+        
+        print ('QUE COMIENCE EL JUEGO... !')
+        
+        self.crearMapa()
+        self.encontrarSoko()
+        self.imprimirMapa()
+
+        while self.completo == False:
+            print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
+            movimiento = input('Siguiente movimiento: ')
+            if movimiento == "w":
+                self.movArriba()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 's':
+                self.movAbajo()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 'd':
+                self.movDerecha()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 'a':
+                self.movIzquierda()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            else:
+                self.limpiarPantalla()
+                print('Porfavor, verifique su entrada... \n')
+                self.imprimirMapa()
+
+    def juegoContinuo(self):
+        self.map = []
+        print('=========================================')
+        print('Actualmente el juego cuenta con 3 niveles')
+        comienza = False
+        while comienza == False:
+            nuevo = input('Siguiente nivel a abrir:\n\t[1 | 2 | 3]\n: ')
+            if nuevo == '1':
+                self.nivel = open("lv0.soko", "r")
+                comienza = True
+            elif nuevo == '2':
+                self.nivel = open("lv1.soko", "r")
+                comienza = True
+            elif nuevo == '3':
+                self.nivel = open("lv2.soko", "r")
+                comienza = True
+            else:
+                self.limpiarPantalla()
+                print('Actualmente el juego no dispone del nivel seleccionado...\n')
+        self.limpiarPantalla()
+        self.crearMapa()
+        self.encontrarSoko()
+        self.imprimirMapa()
+        while self.completo == False:
+            print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
+            movimiento = input('Siguiente movimiento: ')
+            if movimiento == "w":
+                self.movArriba()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 's':
+                self.movAbajo()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 'd':
+                self.movDerecha()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            elif movimiento == 'a':
+                self.movIzquierda()
+                self.limpiarPantalla()
+                self.imprimirMapa()
+                self.evaluarMapa()
+            else:
+                self.limpiarPantalla()
+                print('Porfavor, verifique su entrada... \n')
+                self.imprimirMapa()
 
 juego = Sokoban()
-juego.crearMapa()
-juego.imprimirMapa()
-juego.encontrarPersonaje()
-
-while True: #Bucle para jugar N veces
-  print("Posición actual: ", "[", juego.posy, ",", juego.posx, "]")
-  movimiento = input("Siguiente movimiento: ") #Lee el movimiento del muñeco
-  if movimiento == "d": #Si es d - moverá a la derecha
-    juego.moverDerecha()
-    juego.clearsc()
-    juego.imprimirMapa()
-  elif movimiento == "a": #Si es a nos moverá a la izquierda
-    juego.moverIzquierda()
-    juego.clearsc()
-    juego.imprimirMapa()
-  elif movimiento == "w": #Si entramos w nos moverá arriba
-    juego.moverArriba()
-    juego.clearsc()
-    juego.imprimirMapa()
-  elif movimiento == "s": #Si pulsamo s nos moverá abajo
-    juego.moverAbajo()
-    juego.clearsc()
-    juego.imprimirMapa()
-  elif movimiento == "t": #Se teletransporta a posibles "random"
-    juego.teleport()
-    juego.clearsc()
-    juego.imprimirMapa()
-  else:
-    juego.clearsc()
-    print("============================")
-    print ("Porfavor, verifique su entrada...")
-    juego.imprimirMapa()
+juego.comenzarJuego()
+continua = input('¿Deseas continuar? \n\t[s/n]\n: ')
+while continua == 's':
+    juego.completo = False
+    juego.juegoContinuo()
