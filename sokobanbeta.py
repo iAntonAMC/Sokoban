@@ -25,6 +25,8 @@ class Sokoban:
             for casilla in fila:
                 if casilla == 0:
                     print("  ", end="")
+                elif casilla == 7:
+                    print("  ", end="")
                 elif casilla == 1:
                     print(chr(128125), end="")
                 elif casilla == 2:

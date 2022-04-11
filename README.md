@@ -18,6 +18,8 @@ Por: Torres Fernández Jesús Antonio | 1721110125
 
 6 - Caja en meta - (Gema azúl)
 
+7 - Espacio vacío, pero no usable.
+
 # Controles
 a - Izquierda
 
