@@ -410,7 +410,7 @@ class Sokoban:
         print('=========================================')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
+            nuevo = input('¿Qué nivel deseas abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -464,4 +464,3 @@ while continua == 's':
     continua = input('¿Deseas continuar? \n\t[s/n]\n:')
 
 print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC©')
-

@@ -63,7 +63,7 @@ class Sokoban:
             verificador.append(num2)
         if sum(verificador) == 0:
             self.limpiarPantalla()
-            print(chr(128125), chr(128142), chr(129535), '¡FELICIDADES! ¡COMPLETASTE EL NIVEL!',chr(129535), chr(128142), chr(128125))
+            print(chr(128125), chr(128142), chr(129535), '¡¡¡FELICIDADES!!! ¡¡¡COMPLETASTE EL NIVEL!!!',chr(129535), chr(128142), chr(128125))
             self.completo = True
         else:
             pass
@@ -348,14 +348,30 @@ class Sokoban:
             self.map[self.posy + 2][self.posx] = 6
             self.posy += 1
 
+    def teleport(self):
+        if self.map[self.posy][self.posx] == 1:
+            teleporty = 0
+            teleportx = 0
+            libre = False
+            while libre == False:
+                teleporty = random.randint(1, len(self.map)-1)
+                for linea in self.map:
+                    teleportx = random.randint(1,len(linea)-1)
+                if self.map[teleporty][teleportx] == 0:
+                    libre = True
+            self.map[self.posy][self.posx] = 0
+            self.posy = teleporty
+            self.posx = teleportx
+            self.map[self.posy][self.posx] = 1
+
     def comenzarJuego(self):
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
-        print(chr(128142), ' Bienvenido a Sokoban v1.0.0 ', chr(128142))
+        print(chr(128142), ' Bienvenide a Sokoban v1.0.0 ', chr(128142))
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
         print('\nActualmente el juego cuenta con 3 niveles')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir? \n\t[ 1 | 2 | 3 ]\n: ')
+            nuevo = input('¿Qué nivel deseas abrir? \n\t[ 1 | 2 | 3 ]\n:')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -368,15 +384,11 @@ class Sokoban:
             else:
                 self.limpiarPantalla()
                 print('Actualmente el juego no dispone del nivel seleccionado...\n')
-
         self.limpiarPantalla()
-        
         print ('==========================\nQUE COMIENCE EL JUEGO... !\n==========================')
-        
         self.crearMapa()
         self.encontrarSoko()
         self.imprimirMapa()
-
         while self.completo == False:
             print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
             movimiento = input('Siguiente movimiento: ')
@@ -400,9 +412,13 @@ class Sokoban:
                 self.limpiarPantalla()
                 self.imprimirMapa()
                 self.evaluarMapa()
+            elif movimiento == 't':
+                self.teleport()
+                self.limpiarPantalla()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
-                print('Porfavor, verifique su entrada... \n')
+                print('Porfavor, verifica tu entrada... \n')
                 self.imprimirMapa()
 
     def juegoContinuo(self):
@@ -410,7 +426,7 @@ class Sokoban:
         print('=========================================')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
+            nuevo = input('¿Qué nivel deseas abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -450,9 +466,13 @@ class Sokoban:
                 self.limpiarPantalla()
                 self.imprimirMapa()
                 self.evaluarMapa()
+            elif movimiento == 't':
+                self.teleport()
+                self.limpiarPantalla()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
-                print('Porfavor, verifique su entrada... \n')
+                print('Porfavor, verifica tu entrada... \n')
                 self.imprimirMapa()
 
 juego = Sokoban()
@@ -464,4 +484,3 @@ while continua == 's':
     continua = input('¿Deseas continuar? \n\t[s/n]\n:')
 
 print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC©')
-
