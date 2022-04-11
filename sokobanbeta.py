@@ -365,6 +365,20 @@ class Sokoban:
             self.posy = teleporty
             self.posx = teleportx
             self.map[self.posy][self.posx] = 1
+        elif self.map[self.posy][self.posx] == 5:
+            teleporty = 0
+            teleportx = 0
+            libre = False
+            while libre == False:
+                teleporty = random.randint(1, len(self.map)-1)
+                for linea in self.map:
+                    teleportx = random.randint(1,len(linea)-1)
+                if self.map[teleporty][teleportx] == 0:
+                    libre = True
+            self.map[self.posy][self.posx] = 4
+            self.posy = teleporty
+            self.posx = teleportx
+            self.map[self.posy][self.posx] = 5
 
     def comenzarJuego(self):
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))

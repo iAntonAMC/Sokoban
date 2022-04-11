@@ -9,7 +9,7 @@ class Sokoban:
     completo = False
 
     def __init__(self):
-        print("Sokoban v1.0.0 Por Jesús Antonio Torres \n")
+        print("Sokoban v1.1.0 Por Jesús Antonio Torres \n")
 
     def crearMapa(self):
         for row in self.nivel:
@@ -24,6 +24,8 @@ class Sokoban:
         for fila in self.map:
             for casilla in fila:
                 if casilla == 0:
+                    print("  ", end="")
+                elif casilla == 7:
                     print("  ", end="")
                 elif casilla == 1:
                     print(chr(128125), end="")
@@ -348,9 +350,39 @@ class Sokoban:
             self.map[self.posy + 2][self.posx] = 6
             self.posy += 1
 
+    def teleport(self):
+        if self.map[self.posy][self.posx] == 1:
+            teleporty = 0
+            teleportx = 0
+            libre = False
+            while libre == False:
+                teleporty = random.randint(1, len(self.map)-1)
+                for linea in self.map:
+                    teleportx = random.randint(1,len(linea)-1)
+                if self.map[teleporty][teleportx] == 0:
+                    libre = True
+            self.map[self.posy][self.posx] = 0
+            self.posy = teleporty
+            self.posx = teleportx
+            self.map[self.posy][self.posx] = 1
+        elif self.map[self.posy][self.posx] == 5:
+            teleporty = 0
+            teleportx = 0
+            libre = False
+            while libre == False:
+                teleporty = random.randint(1, len(self.map)-1)
+                for linea in self.map:
+                    teleportx = random.randint(1,len(linea)-1)
+                if self.map[teleporty][teleportx] == 0:
+                    libre = True
+            self.map[self.posy][self.posx] = 4
+            self.posy = teleporty
+            self.posx = teleportx
+            self.map[self.posy][self.posx] = 5
+
     def comenzarJuego(self):
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
-        print(chr(128142), ' Bienvenide a Sokoban v1.0.0 ', chr(128142))
+        print(chr(128142), ' Bienvenide a Sokoban v1.1.0 ', chr(128142))
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
         print('\nActualmente el juego cuenta con 3 niveles')
         comienza = False
@@ -368,15 +400,11 @@ class Sokoban:
             else:
                 self.limpiarPantalla()
                 print('Actualmente el juego no dispone del nivel seleccionado...\n')
-
         self.limpiarPantalla()
-        
         print ('==========================\nQUE COMIENCE EL JUEGO... !\n==========================')
-        
         self.crearMapa()
         self.encontrarSoko()
         self.imprimirMapa()
-
         while self.completo == False:
             print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
             movimiento = input('Siguiente movimiento: ')
@@ -400,6 +428,10 @@ class Sokoban:
                 self.limpiarPantalla()
                 self.imprimirMapa()
                 self.evaluarMapa()
+            elif movimiento == 't':
+                self.teleport()
+                self.limpiarPantalla()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
                 print('Porfavor, verifica tu entrada... \n')
@@ -450,6 +482,10 @@ class Sokoban:
                 self.limpiarPantalla()
                 self.imprimirMapa()
                 self.evaluarMapa()
+            elif movimiento == 't':
+                self.teleport()
+                self.limpiarPantalla()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
                 print('Porfavor, verifica tu entrada... \n')
@@ -463,4 +499,4 @@ while continua == 's':
     juego.juegoContinuo()
     continua = input('¿Deseas continuar? \n\t[s/n]\n:')
 
-print('\nGracias por jugar a Sokoban v1.0.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC©')
+print('\nGracias por jugar a Sokoban v1.1.0\nNo olvides dejar tus comentarios en Replit: https://replit.com/@iAntonAMC/Sokoban\n\nATTE: iAntonAMC©')
