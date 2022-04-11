@@ -63,7 +63,7 @@ class Sokoban:
             verificador.append(num2)
         if sum(verificador) == 0:
             self.limpiarPantalla()
-            print(chr(128125), chr(128142), chr(129535), '¡FELICIDADES! ¡COMPLETASTE EL NIVEL!',chr(129535), chr(128142), chr(128125))
+            print(chr(128125), chr(128142), chr(129535), '¡¡¡FELICIDADES!!! ¡¡¡COMPLETASTE EL NIVEL!!!',chr(129535), chr(128142), chr(128125))
             self.completo = True
         else:
             pass
@@ -350,12 +350,12 @@ class Sokoban:
 
     def comenzarJuego(self):
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
-        print(chr(128142), ' Bienvenido a Sokoban v1.0.0 ', chr(128142))
+        print(chr(128142), ' Bienvenide a Sokoban v1.0.0 ', chr(128142))
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
         print('\nActualmente el juego cuenta con 3 niveles')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel desea abrir? \n\t[ 1 | 2 | 3 ]\n: ')
+            nuevo = input('¿Qué nivel deseas abrir? \n\t[ 1 | 2 | 3 ]\n:')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -402,7 +402,7 @@ class Sokoban:
                 self.evaluarMapa()
             else:
                 self.limpiarPantalla()
-                print('Porfavor, verifique su entrada... \n')
+                print('Porfavor, verifica tu entrada... \n')
                 self.imprimirMapa()
 
     def juegoContinuo(self):
@@ -452,7 +452,7 @@ class Sokoban:
                 self.evaluarMapa()
             else:
                 self.limpiarPantalla()
-                print('Porfavor, verifique su entrada... \n')
+                print('Porfavor, verifica tu entrada... \n')
                 self.imprimirMapa()
 
 juego = Sokoban()
