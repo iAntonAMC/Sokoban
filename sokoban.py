@@ -378,7 +378,7 @@ class Sokoban:
             self.map[self.posy][self.posx] = 4
             self.posy = teleporty
             self.posx = teleportx
-            self.map[self.posy][self.posx] = 5
+            self.map[self.posy][self.posx] = 1
 
     def comenzarJuego(self):
         print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125), chr(129535), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125))
