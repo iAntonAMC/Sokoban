@@ -5,6 +5,7 @@ class Sokoban:
     map = []
     posy = 0
     posx = 0
+    posicion_soko = [posy, posy]
     nivel = ()
     completo = False
 
@@ -406,7 +407,7 @@ class Sokoban:
         self.encontrarSoko()
         self.imprimirMapa()
         while self.completo == False:
-            print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
+            print("Posición personaje: ", self.posicion_soko)
             movimiento = input('Siguiente movimiento: ')
             if movimiento == "w":
                 self.movArriba()
@@ -460,7 +461,7 @@ class Sokoban:
         self.encontrarSoko()
         self.imprimirMapa()
         while self.completo == False:
-            print("Posición actual: ", "[", self.posy, ",", self.posx, "]")
+            print("Posición personaje: ", self.posicion_soko)
             movimiento = input('Siguiente movimiento: ')
             if movimiento == "w":
                 self.movArriba()
