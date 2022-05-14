@@ -387,7 +387,7 @@ class Sokoban:
         print('\nActualmente el juego cuenta con 3 niveles')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel deseas abrir? \n\t[ 1 | 2 | 3 ]\n:')
+            nuevo = input('¿Qué nivel deseas abrir? \n\t[ 1 | 2 | 3 | 4]\n:')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
@@ -396,6 +396,9 @@ class Sokoban:
                 comienza = True
             elif nuevo == '3':
                 self.nivel = open("lv2.soko", "r")
+                comienza = True
+            elif nuevo == '4':
+                self.nivel = open("lv3.soko", "r")
                 comienza = True
             else:
                 self.limpiarPantalla()
@@ -432,6 +435,12 @@ class Sokoban:
                 self.teleport()
                 self.limpiarPantalla()
                 self.imprimirMapa()
+            elif movimiento == "p":
+                self.map=[]
+                self.limpiarPantalla()
+                self.crearMapa()
+                self.encontrarSoko()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
                 print('Porfavor, verifica tu entrada... \n')
@@ -442,12 +451,15 @@ class Sokoban:
         print('=========================================')
         comienza = False
         while comienza == False:
-            nuevo = input('¿Qué nivel deseas abrir ahora?\n\t[ 1 | 2 | 3 ]\n: ')
+            nuevo = input('¿Qué nivel deseas abrir ahora?\n\t[ 1 | 2 | 3 | 4 ]\n: ')
             if nuevo == '1':
                 self.nivel = open("lv0.soko", "r")
                 comienza = True
             elif nuevo == '2':
                 self.nivel = open("lv1.soko", "r")
+                comienza = True
+            elif nuevo == '3':
+                self.nivel = open("lv2.soko", "r")
                 comienza = True
             elif nuevo == '3':
                 self.nivel = open("lv2.soko", "r")
@@ -486,6 +498,12 @@ class Sokoban:
                 self.teleport()
                 self.limpiarPantalla()
                 self.imprimirMapa()
+            elif movimiento == "p":
+                self.map=[]
+                self.limpiarPantalla()
+                self.crearMapa()
+                self.encontrarSoko()
+                self.imprimirMapa()
             else:
                 self.limpiarPantalla()
                 print('Porfavor, verifica tu entrada... \n')
@@ -494,7 +512,7 @@ class Sokoban:
 juego = Sokoban()
 juego.comenzarJuego()
 continua = input('¿Deseas continuar? \n\t[s/n]\n:')
-while continua == 's':
+while continua != 'n' or continua != "N":
     juego.completo = False
     juego.juegoContinuo()
     continua = input('¿Deseas continuar? \n\t[s/n]\n:')
