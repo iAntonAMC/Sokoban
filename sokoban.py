@@ -450,7 +450,7 @@ print(chr(127921), chr(128125), chr(127921), chr(128125),chr(128142), chr(128125
 print('\nActualmente el juego cuenta con 3 niveles')
 juego.juegoContinuo()
 continua = input('¿Deseas continuar? \n\t[s/n]\n:')
-while continua != 'n' or continua != "N":
+while continua != 'n' or continua != "N" and continua == 's':
     juego.completo = False
     juego.juegoContinuo()
     continua = input('¿Deseas continuar? \n\t[s/n]\n:')
